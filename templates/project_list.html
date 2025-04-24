@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>My Projects</h2>
+<a href="{% url 'project_create' %}" class="btn btn-primary mb-3">New Project</a>
+<ul class="list-group">
+  {% for project in projects %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <a href="{% url 'project_overview' project.pk %}">{{ project.name }}</a>
+      {% if user == project.owner %}
+        <div>
+          <a href="{% url 'project_edit' project.pk %}" class="btn btn-sm btn-secondary">Edit</a>
+          <a href="{% url 'project_delete' project.pk %}" class="btn btn-sm btn-danger">Delete</a>
+        </div>
+      {% endif %}
+    </li>
+  {% empty %}
+    <li>No projects yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
